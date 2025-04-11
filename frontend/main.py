@@ -31,7 +31,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Hello! I am a sarcasm detector bot! Please send me a text, and I'll tell you how likely it is to be sarcastic!") # can change text later!
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Send me any text, and I'll analyze it to determine how likely it is that it's sarcastic 🧐") # can change text later!
+    await update.message.reply_text("Send me any text (of <b>at least 5 words</b>), and I'll analyze it to determine how likely it is that it's sarcastic 🧐", parse_mode="HTML")
     
 # responses
 
@@ -63,8 +63,19 @@ def handle_response(text):
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
-    response = handle_response(text)
-    await update.message.reply_text(response, parse_mode = "HTML") # can change text later!
+    words = text.split() 
+    word_count = len(words) 
+
+    # process the text only if there's at least 5 words
+    if word_count < 5:
+        await update.message.reply_text(
+            "Please send a text of <b>at least 5 words</b> so I can make a meaningful deduction!", parse_mode="HTML"
+        )
+    else:
+        response = handle_response(text)
+        await update.message.reply_text(response, parse_mode="HTML")
+
+  
 
 
 

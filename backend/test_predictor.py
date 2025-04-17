@@ -1,4 +1,5 @@
 from app.predictor import SarcasmDetector
+import tensorflow as tf
 
 model = SarcasmDetector()
 print(model.predict("Oh wow, what a brilliant idea."))

@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from .model import predict_sacarsm
+from .predictor import predict_sacarsm
 
 app = Flask(__name__)
 

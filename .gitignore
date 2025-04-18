@@ -1,4 +1,5 @@
 .DS_Store
 .venv/
 backend/Models
+__pycache__/
 venv/

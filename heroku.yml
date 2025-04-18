@@ -1,0 +1,19 @@
+# Heroku build configuration for Docker
+setup:
+  config:
+    # You can set build-time environment variables here if needed
+    # EXAMPLE_BUILD_VAR: some_value
+    pass
+
+build:
+  docker:
+    web: Dockerfile
+    worker: Dockerfile
+  # You can specify build arguments here if needed
+  # config:
+  #   RAILS_ENV: development
+
+# Define the commands to run for each process type
+run:
+  web: gunicorn backend.app.main:app --bind 0.0.0.0:$PORT
+  worker: python frontend/main.py 

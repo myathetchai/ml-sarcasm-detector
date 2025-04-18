@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from telegram import Update, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, ContextTypes
+import requests
 # import models from backend folder
 
 
@@ -35,6 +36,42 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
 # responses
 
+# temporary, refer to comments below for full
+def handle_response(text):
+    backend_url = "http://localhost:5000/predict"  # update if deployed
+    try:
+        response = requests.post(backend_url, json={"message": text})
+        response.raise_for_status()
+        result = response.json()
+        sarcasm_value = result.get("sarcastic") 
+        average_score = sarcasm_value # temp
+        '''
+        predictions = []  # put the predictions in each of the models here
+        average_score = sum(predictions) / 6
+        '''
+
+        if average_score == 1:
+            prediction = "Sarcastic"
+            confidence = 90  # dummy placeholder
+        elif average_score == 0:
+            prediction = "Not Sarcastic"
+            confidence = 90 # dummy
+        else:
+            prediction = "Unknown"
+            confidence = 0 # dummy
+
+        reply_message = (
+            "<b>Analysis Complete!</b>\n\n"
+            f"<b>Your sentence:</b> ‘{text}’\n\n"
+            f"<b>Prediction:</b> {prediction} (Confidence: {confidence}%)\n\n"
+        )
+    except requests.RequestException as e:
+        print("Error communicating with backend:", e)
+        reply_message = "Oops! Something went wrong. Please try again later."
+
+    return reply_message
+
+'''
 def handle_response(text):
     return f"you sent {text}" # filler to just test out bot first
     """
@@ -59,7 +96,7 @@ def handle_response(text):
 
     return reply_message
     """
-    
+''' 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text

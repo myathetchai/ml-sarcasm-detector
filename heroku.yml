@@ -1,9 +1,4 @@
 # Heroku build configuration for Docker
-setup:
-  config:
-    # You can set build-time environment variables here if needed
-    # EXAMPLE_BUILD_VAR: some_value
-    pass
 
 build:
   docker:

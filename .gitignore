@@ -2,5 +2,4 @@
 .env
 .venv/
 backend/Models
-__pycache__/
 venv/

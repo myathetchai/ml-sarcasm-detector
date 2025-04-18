@@ -18,9 +18,24 @@ RUN apt-get update && apt-get install -y --no-install-recommends build-essential
 # Copy the requirements file into the container at /app
 COPY requirements.txt .
 
+# Upgrade pip
+RUN echo "--- Upgrading pip ---"
+RUN pip install --upgrade pip
+
 # Install any needed packages specified in requirements.txt
 # Using --no-cache-dir reduces image size slightly
+RUN echo "--- Installing requirements ---"
 RUN pip install --no-cache-dir -r requirements.txt
+
+# --- Debugging --- 
+RUN echo "--- Checking installed packages ---"
+RUN pip list
+RUN echo "--- Checking PATH ---"
+RUN echo $PATH
+RUN echo "--- Checking for gunicorn executable ---"
+RUN which gunicorn || echo "gunicorn not found via which"
+RUN ls -l /usr/local/bin/gunicorn || echo "gunicorn not found via ls"
+# --- End Debugging ---
 
 # Copy the rest of the application code into the container at /app
 # Copy backend first to potentially improve layer caching if only frontend changes

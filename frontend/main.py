@@ -59,7 +59,7 @@ def handle_response(text):
             confidence = (1 - average_score) * 100
 
         reply_message = (
-            "<b>Analysis Complete!</b>\n\n"
+            "<b>Analysis Complete! 🎉</b>\n\n"
             f"<b>Your sentence:</b> ‘{text}’\n\n"
             f"<b>Prediction:</b> {prediction} (Confidence: {confidence:.0f}%)\n\n"
         )

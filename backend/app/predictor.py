@@ -22,15 +22,30 @@ class ModelManager:
         self.current_file = Path(__file__)
         self.models_dir = os.path.join(self.current_file.parent.parent, "Models")
         os.makedirs(self.models_dir, exist_ok=True)
-        
+
+        self.model_configs = {
+             "xlnet": {
+                "type": "transformers",
+                "files": {
+                    "config.json": "1oYmvswHUW27Csr5jc9ooO1VlfHcpW87t",
+                    "model.safetensors": "1ibgyYJbnaBcN8VEmW0iSsHcYbaYpY5iS",
+                    "tokenizer_config.json": "1-mCphBFPFOnv4Sb2trcKqZQ4COtoToOi",
+                    "special_tokens_map.json": "1VdgaH9mYH-A_sxpe_3j0RH3JqipBfJNy",
+                    "spiece.model": "19l7uxapF-kRAHgw-71xRCCZRXnXRQBsj"
+                }
+            }
+         }
+        '''
         # Define model configurations
         self.model_configs = {
+            
             "logistic_regression": {
                 "type": "sklearn",
                 "files": {
                     "model.pkl": "1KadCDS4pYn6Rw10iLDbzORJ0edviH9Ok"  # bert_logreg_model.pkl
                 }
             },
+        
             "xgboost": {
                 "type": "xgboost",
                 "files": {
@@ -56,9 +71,14 @@ class ModelManager:
                     "pos_tokenizer.pkl": "1-sHIqWXdEVpfd6HmrvvgwW1_kQMcPBlc",
                     "tfidf_vectorizer.pkl": "1pSwqWgbzQqEyS2L8DaO1OqM6_86armCq"
                 }
-            }
             
+            }
         }
+        '''
+            
+            
+          
+        
         
         # Initialize models dictionary
         self.models = {}

@@ -44,7 +44,8 @@ def handle_response(text):
         response.raise_for_status()
         result = response.json()
         predictions = result.get("sarcastic") 
-        average_score = sum(predictions) / len(predictions)
+        valid_preds = [v for v in predictions.values() if isinstance(v, int)]
+        average_score = sum(valid_preds) / len(valid_preds)
         '''
         predictions = []  # put the predictions in each of the models here
         average_score = sum(predictions) / 6

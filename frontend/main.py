@@ -45,6 +45,7 @@ def handle_response(text):
         result = response.json()
         predictions = result.get("sarcastic") 
         valid_preds = [v for v in predictions.values() if isinstance(v, int)]
+        print(valid_preds)
         average_score = sum(valid_preds) / len(valid_preds)
         '''
         predictions = []  # put the predictions in each of the models here
@@ -102,9 +103,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     word_count = len(words) 
 
     # process the text only if there's at least 5 words
-    if word_count < 5:
+    if word_count < 3:
         await update.message.reply_text(
-            "Please send a text of <b>at least 5 words</b> so I can make a meaningful deduction!", parse_mode="HTML"
+            "Please send a text of <b>at least 3 words</b> so I can make a meaningful deduction!", parse_mode="HTML"
         )
     else:
         response = handle_response(text)

@@ -171,8 +171,11 @@ class ModelManager:
                     with torch.no_grad():
                         outputs = self.models[name](**inputs)
                         logits = outputs.logits
+                        probs = torch.softmax(logits, dim=1).numpy()[0]
                         prediction = torch.argmax(logits, dim=1).item()
                     predictions[name] = prediction
+                    print(f"\n>>> Input: {text}")
+                    print(f"XLNet Probabilities: Not Sarcastic: {probs[0]:.4f}, Sarcastic: {probs[1]:.4f}")
                 elif config["type"] == "keras":
                     # Tokenize and make prediction
                     sequence = self.tokenizers[name].texts_to_sequences([text])
@@ -207,7 +210,8 @@ class ModelManager:
             except Exception as e:
                 logger.error(f"Error making prediction with {name}: {str(e)}")
                 predictions[name] = None
-                
+
+        
         return predictions
 
 class SarcasmDetector:
